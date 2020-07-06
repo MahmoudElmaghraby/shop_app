@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop_app/widgets/product_item.dart';
 
 import '../models/product.dart';
 
@@ -40,6 +41,26 @@ class ProductsOverviewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('My Shop'),
+      ),
+      body: GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          //It defins how the grid must be structured
+          crossAxisCount: 2, //Number of colums I want to have
+          childAspectRatio: 3 / 2,
+          crossAxisSpacing: 10, //The spacing between the colums
+          mainAxisSpacing: 10, //The spacing between the rows
+        ),
+        itemBuilder: (ctx, i) => ProductItem(
+          loadedProducts[i].id,
+          loadedProducts[i].title,
+          loadedProducts[i].imageUrl,
+        ),
+        padding: const EdgeInsets.all(10.0),
+        itemCount: loadedProducts.length,
+      ),
+    );
   }
 }
