@@ -12,7 +12,11 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final product = Provider.of<Product>(context);
+    final product = Provider.of<Product>(
+      context,
+      listen:
+          false, //We need to listen in leading favorit widget only so we make it false here and wrap IconButton widget with Consumer widget
+    );
 
     return ClipRRect(
       // Widget that force the child to be rounded
@@ -32,18 +36,18 @@ class ProductItem extends StatelessWidget {
         ),
         footer: GridTileBar(
           backgroundColor: Colors.black87,
-          leading: IconButton(
-            icon: Icon(
-              product.isFavorite
-                  ? Icons.favorite
-                  : Icons
-                      .favorite_border, //ERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRROR
+          leading: Consumer<Product>(
+            //Consumer to use provider in this spesific widget so this widget onlyyyyy will rerender if any thing changes
+            builder: (context, value, child) => IconButton(
+              icon: Icon(
+                product.isFavorite ? Icons.favorite : Icons.favorite_border,
+              ),
+              onPressed: () {
+                product.toggleFavoriteStatus();
+                print(product.isFavorite);
+              },
+              color: Theme.of(context).accentColor,
             ),
-            onPressed: () {
-              product.toggleFavoriteStatus();
-              print(product.isFavorite);
-            },
-            color: Theme.of(context).accentColor,
           ),
           trailing: IconButton(
             icon: Icon(Icons.shopping_cart),
