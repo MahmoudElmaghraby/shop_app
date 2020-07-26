@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_app/providers/card.dart';
 import 'package:shop_app/providers/product.dart';
 import 'package:shop_app/screens/product_detail_screen.dart';
 
@@ -16,6 +17,11 @@ class ProductItem extends StatelessWidget {
       context,
       listen:
           false, //We need to listen in leading favorit widget only so we make it false here and wrap IconButton widget with Consumer widget
+    );
+
+    final cart = Provider.of<Cart>(
+      context,
+      listen: false,
     );
 
     return ClipRRect(
@@ -51,7 +57,9 @@ class ProductItem extends StatelessWidget {
           ),
           trailing: IconButton(
             icon: Icon(Icons.shopping_cart),
-            onPressed: () {},
+            onPressed: () {
+              cart.addItem(product.id, product.price, product.title);
+            },
             color: Theme.of(context).accentColor,
           ),
           title: Text(

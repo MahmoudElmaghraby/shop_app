@@ -26,6 +26,7 @@ class Products with ChangeNotifier {
       price: 29.99,
       imageUrl:
           'https://cdn.pixabay.com/photo/2014/10/23/18/05/burger-500054_1280.jpg',
+      isFavorite: true,
     ),
     Product(
       id: 'p4',
@@ -34,16 +35,37 @@ class Products with ChangeNotifier {
       price: 29.99,
       imageUrl:
           'https://cdn.pixabay.com/photo/2018/03/31/19/29/schnitzel-3279045_1280.jpg',
+      isFavorite: true,
     ),
   ]; //Not final because it will change later , itself will change not the value
 
+  //var _showFavoritesOnly = false;
+
   List<Product> get items {
+    /*  if (_showFavoritesOnly) {
+      return _items.where((element) => element.isFavorite).toList();
+    } */
+
     return [..._items]; // Return a copy of items list
+  }
+
+  List<Product> get favoriteItems {
+    return _items.where((element) => element.isFavorite == true).toList();
   }
 
   Product findById(String id) {
     return _items.firstWhere((prod) => prod.id == id);
   }
+/* 
+  void showFavoritesOnly() {
+    _showFavoritesOnly = true;
+    notifyListeners(); //Let all the widgets get the leatest updated list
+  }
+
+  void showAll() {
+    _showFavoritesOnly = false;
+    notifyListeners(); //Let all the widgets get the leatest updated list
+  } */
 
   void addProduct() {
     //_items.add(value);
